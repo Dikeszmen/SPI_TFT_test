@@ -24,5 +24,13 @@ This performs a simultaneous write/read transaction over the selected SPI bus. D
 That’s all there is in the helper library. It is possible to do simple read and writes over the SPI bus using the standard read() and write() system calls though
  – write() may be better to use for sending data to chains of shift registers, or those LED strings where you send RGB triplets of data.
  Devices such as A/D and D/A converters usually need to perform a concurrent write/read transaction to work.*/
+typedef struct Serial_SPI{
+    int dlen;
+    int data;
+    int cmd;
+
+}SPI_package;
+
+int Init(int *speed,int *fd);
 
 #endif // INIT_H_INCLUDED

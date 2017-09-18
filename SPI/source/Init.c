@@ -8,7 +8,8 @@
 #define MOSI 12
 #define CHIP0 10
 #define CHIP1 11
-void Init(int *speed,int *fd)
+#define MEGA 1000000
+int Init(int *speed,int *fd)
 {
 
     wiringPiSetup();
@@ -20,16 +21,15 @@ void Init(int *speed,int *fd)
     pinMode(CHIP0,OUTPUT);
     pinMode(CHIP1,OUTPUT);
 
-        if(!(*fd=wiringPiSPISetup(CHIP0,speed)))
+        if(!(*fd=wiringPiSPISetup(CHIP0,MEGA)))
             syslog(LOG_ERR,"Chip select is not in pin 10\n");
-        else if(!(*fd=wiringPiSPISetup(CHIP1,speed)))
+        else if(!(*fd=wiringPiSPISetup(CHIP1,MEGA)))
                 {
                     syslog(LOG_ERR,"Chip select is not in pin 11\n");
                     return -1;
                 }
-        wiringPiSP
-
         //speed channel  in frequency e.g. 50000 depends on slave(int)
+
 
 
 
