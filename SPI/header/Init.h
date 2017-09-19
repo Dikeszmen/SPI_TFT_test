@@ -1,9 +1,17 @@
 #ifndef INIT_H_INCLUDED
 #define INIT_H_INCLUDED
-#include <wiringPi.h>
 #include <wiringPiSPI.h>
-#define CHN0    0
-#define CHN1    1
+#include <linux/spi/spidev.h>
+#include <wiringPi.h>
+#include <syslog.h>
+#include <string.h>
+#define SCK 14
+#define MOSI 12
+#define CHIP0 10
+#define CHIP1 11
+#define LOW 0
+#define HIGH
+
 /**
 
 in your program. Programs need to be linked with -lwiringPi as usual.

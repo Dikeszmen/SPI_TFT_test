@@ -1,38 +1,37 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <linux/spi/spidev.h>
-#include <wiringPiSPI.h>
-#include <wiringPi.h>
-#include <syslog.h>
-#define SCK 14
-#define MOSI 12
-#define CHIP0 10
-#define CHIP1 11
-#define MEGA 1000000
+
+
 int Init(int *speed,int *fd)
 {
 
     wiringPiSetup();
     /**SYSLOG has to set correctly*/
     openlog(NULL,LOG_PID,LOG_LOCAL1);
-
+    int retValue;
     pinMode(SCK,OUTPUT);
     pinMode(MOSI,OUTPUT);
     pinMode(CHIP0,OUTPUT);
     pinMode(CHIP1,OUTPUT);
 
-        if(!(*fd=wiringPiSPISetup(CHIP0,MEGA)))
-            syslog(LOG_ERR,"Chip select is not in pin 10\n");
-        else if(!(*fd=wiringPiSPISetup(CHIP1,MEGA)))
-                {
-                    syslog(LOG_ERR,"Chip select is not in pin 11\n");
-                    return -1;
-                }
-        //speed channel  in frequency e.g. 50000 depends on slave(int)
+    digitalWrite(CHIP0,HIGH);
+    digitalWrite(CHIP1,HIGH);
+        if(*fd=wiringPiSPISetup(CHIP0,*speed))
+            retValue=CHIP0;
+        else if(*fd=wiringPiSPISetup(CHIP1,*speed))
+               retValue=CHIP1;
+        else
+        {
+        perror("No CHIP Select\n");
+            return -1;
+        }
 
+    return 0;
+}
 
-
-
-
-
+int sendDatas(int *CS,char *message)
+{
+    digitalWrite(*CS,0);
+    int len;
+    char *buffer;
 }
